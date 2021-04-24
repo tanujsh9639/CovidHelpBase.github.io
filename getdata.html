@@ -1,0 +1,169 @@
+<html>
+
+<head> <title> All Data </title>
+<style>
+button {
+	  display: block;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: #69BC22;
+  width: 180px;
+  height: 40px;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  background-size: 100% 100%;
+  box-shadow: 0 0 0 7px var(--light) inset;
+  margin: auto;
+	position: center;
+    top: 50%
+	
+}
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+table td {
+  
+}
+table td,
+table th {
+  border: 1px solid #dadada;
+  padding: 5px;
+}
+table thead th {
+  text-align: left;
+}
+table thead th:nth-child(0),
+table thead th:nth-child(1){
+  width: 5%;
+}
+
+table thead th:nth-child(2){
+  width: 10%;
+}
+table thead th:nth-child(3){
+  width: 20%;
+}
+table thead th:nth-child(4){
+  width: 20%;
+}
+td {
+  word-break: break-all;
+}
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+ <button onclick="location.href='file:///E:/CovidHelpBase/CovidHelpBaseFrom%20Sctrach/recipient.html'" >Search again</button>
+<table class="table table-striped table-dark">
+
+<thead>
+<th> Sr no</th>
+<th> Phone No </th>
+<th> City</th>
+<th class="col-md-2"> Address </th>
+<th> Bed </th>
+<th> Oxygen </th>
+<th> Bed with Ventilator </th>
+<th> Remdesivir </th>
+<th> Extra Message </th>
+</thead>
+
+
+<tbody id="tbody1" class="col-md-2">
+
+</tbody >
+		</table>	
+
+
+	
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+	
+
+ <script id="MainScript">
+	 
+	 
+	 
+	 
+	 	var config = {
+    apiKey: "AIzaSyDeqh47ap41ajuoVJ2rWlvy5Dn_VtqkA-o",
+    authDomain: "covidhelpbase.firebaseapp.com",
+    databaseURL: "https://covidhelpbase-default-rtdb.firebaseio.com",
+    projectId: "covidhelpbase",
+    storageBucket: "covidhelpbase.appspot.com",
+    messagingSenderId: "622436412535",
+    appId: "1:622436412535:web:957247ee20cd488a64ea72",
+    measurementId: "G-447S5PKE0H"
+  };
+   firebase.initializeApp(config);
+	
+	
+	
+	function SelectAllData(){
+	
+	var varCity=localStorage.getItem("CName");
+	
+	
+	
+	firebase.database().ref('Data/'+varCity).once('value',
+	
+	function(AllRecords){
+	AllRecords.forEach(
+	
+	function(CurrentRecord){
+	
+	var vCity=CurrentRecord.val().City;
+	var vMessage=CurrentRecord.val().Message;
+	var vPhone=CurrentRecord.val().Phone;
+	var vAddress=CurrentRecord.val().Address;
+	AddItemsToTable(vCity,vMessage,vPhone,vAddress);
+	
+
+	});
+	});
+	}
+	 
+	 
+	 window.onload=SelectAllData;
+	
+	  var stdNo=0;
+	 function AddItemsToTable(City,Message,Phone,Address){
+	 
+	
+	 var tbody=document.getElementById('tbody1');
+	 var trow=document.createElement('tr');
+	 var td1=document.createElement('td');
+	  var td2=document.createElement('td');
+	   var td3=document.createElement('td');
+	    var td4=document.createElement('td');
+		var td5=document.createElement('td');
+		td1.innerHTML=++stdNo;
+		td2.innerHTML=Phone;
+		td3.innerHTML=City;
+		td4.innerHTML=Address;
+		td5.innerHTML=Message;
+		trow.appendChild(td1); trow.appendChild(td2); trow.appendChild(td3); trow.appendChild(td4); trow.appendChild(td5);
+	tbody.appendChild(trow);
+		
+	 
+	 
+	 
+	 
+	 }
+	 </script>
+
+
+
+
+
+</body>
+
+
+</html>
